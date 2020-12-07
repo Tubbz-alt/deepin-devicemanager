@@ -125,6 +125,7 @@ void ThreadPool::initCmd()
     cmdHwinfoSound.file = "hwinfo_sound.txt";
     cmdHwinfoSound.canNotReplace = false;
     m_ListCmd.append(cmdHwinfoSound);
+    m_ListCmdMonitor.append(cmdHwinfoMonitor);
 
     Cmd cmdHwinfoUsb;
     cmdHwinfoUsb.cmd = QString("%1 %2%3").arg("hwinfo --usb > ").arg(PATH).arg("hwinfo_usb.txt");
