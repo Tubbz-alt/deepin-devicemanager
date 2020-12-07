@@ -19,6 +19,7 @@ DeviceAudio::DeviceAudio()
     , m_Description("")
     , m_Chip("")
     , m_Driver("snd_hda_intel")
+    , m_DriverModules("")
     , m_UniqueKey("")
 {
     // 初始化可显示属性
@@ -44,6 +45,7 @@ void DeviceAudio::setInfoFromHwinfo(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "", m_Capabilities);
     setAttribute(mapInfo, "Hardware Class", m_Description);
     setAttribute(mapInfo, "Driver", m_Driver);
+    setAttribute(mapInfo, "Driver Modules", m_DriverModules);
     //2. 获取设备的唯一标识
     /*
      * 在这里将设备的总线信息作为一个设备的唯一标识
@@ -172,7 +174,9 @@ bool DeviceAudio::enable()
     }
 
     // 获取设备状态
-    m_Enable = EnableManager::instance()->isDeviceEnableByDriver(m_Driver);
+    bool eDriver = EnableManager::instance()->isDeviceEnableByDriver(m_Driver);
+    bool eDriverM = EnableManager::instance()->isDeviceEnableByDriver(m_DriverModules);
+    m_Enable = eDriver || eDriverM;
     return m_Enable;
 }
 
